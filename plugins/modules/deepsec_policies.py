@@ -31,11 +31,8 @@ options:
         description: Parent policy ID for inheritance. Searchable as Numeric.
         type: int
       auto_requires_update:
-        description: Auto-update behavior. Searchable as Choice.
-        type: str
-        choices:
-          - on
-          - off
+        description: Auto-update behavior. Set to true to enable automatic updates. Searchable as Boolean.
+        type: bool
       recommendation_scan_mode:
         description: Recommendation scan mode. Searchable as Choice.
         type: str
@@ -47,12 +44,8 @@ options:
         type: dict
         suboptions:
           state:
-            description: State of the anti-malware module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the anti-malware module. Set to true to enable, false to disable.
+            type: bool
           real_time_scan_configuration_id:
             description: Real-time scan configuration ID
             type: int
@@ -67,12 +60,8 @@ options:
         type: dict
         suboptions:
           state:
-            description: State of the firewall module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the firewall module. Set to true to enable, false to disable.
+            type: bool
           rule_ids:
             description: List of firewall rule IDs
             type: list
@@ -82,12 +71,8 @@ options:
         type: dict
         suboptions:
           state:
-            description: State of the intrusion prevention module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the intrusion prevention module. Set to true to enable, false to disable.
+            type: bool
           rule_ids:
             description: List of intrusion prevention rule IDs
             type: list
@@ -97,12 +82,8 @@ options:
         type: dict
         suboptions:
           state:
-            description: State of the integrity monitoring module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the integrity monitoring module. Set to true to enable, false to disable.
+            type: bool
           rule_ids:
             description: List of integrity monitoring rule IDs
             type: list
@@ -112,12 +93,8 @@ options:
         type: dict
         suboptions:
           state:
-            description: State of the log inspection module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the log inspection module. Set to true to enable, false to disable.
+            type: bool
           rule_ids:
             description: List of log inspection rule IDs
             type: list
@@ -127,23 +104,15 @@ options:
         type: dict
         suboptions:
           state:
-            description: State of the web reputation module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the web reputation module. Set to true to enable, false to disable.
+            type: bool
       application_control:
         description: Application control policy extension settings
         type: dict
         suboptions:
           state:
-            description: State of the application control module
-            type: str
-            choices:
-              - on
-              - off
-              - inherited
+            description: State of the application control module. Set to true to enable, false to disable.
+            type: bool
           rule_ids:
             description: List of application control rule IDs
             type: list
@@ -174,13 +143,13 @@ EXAMPLES = """
     config:
       - name: production_policy
         description: "Production server security policy"
-        auto_requires_update: "on"
+        auto_requires_update: true
         parent_id: 1
         anti_malware:
-          state: "on"
+          state: true
           real_time_scan_configuration_id: 1
         firewall:
-          state: "on"
+          state: true
           rule_ids: [1, 2, 3]
 
 - name: Create multiple policies
@@ -189,16 +158,16 @@ EXAMPLES = """
     config:
       - name: web_server_policy
         description: "Web server policy"
-        auto_requires_update: "on"
+        auto_requires_update: true
         firewall:
-          state: "on"
+          state: true
         intrusion_prevention:
-          state: "on"
+          state: true
       - name: database_policy
         description: "Database server policy"
-        auto_requires_update: "on"
+        auto_requires_update: true
         integrity_monitoring:
-          state: "on"
+          state: true
 
 # RUN output:
 # -----------
@@ -208,13 +177,13 @@ EXAMPLES = """
 #     - name: production_policy
 #       description: "Production server security policy"
 #       id: 10
-#       auto_requires_update: "on"
+#       auto_requires_update: true
 #       parent_id: 1
 #       anti_malware:
-#         state: "on"
+#         state: true
 #         real_time_scan_configuration_id: 1
 #       firewall:
-#         state: "on"
+#         state: true
 #         rule_ids: [1, 2, 3]
 #     before: []
 
@@ -225,7 +194,7 @@ EXAMPLES = """
       - name: production_policy
         description: "Updated production policy description"
         firewall:
-          state: "off"
+          state: false
 
 # RUN output:
 # -----------
@@ -235,24 +204,24 @@ EXAMPLES = """
 #     - name: production_policy
 #       description: "Updated production policy description"
 #       id: 10
-#       auto_requires_update: "on"
+#       auto_requires_update: true
 #       parent_id: 1
 #       anti_malware:
-#         state: "on"
+#         state: true
 #         real_time_scan_configuration_id: 1
 #       firewall:
-#         state: "off"
+#         state: false
 #     before:
 #     - name: production_policy
 #       description: "Production server security policy"
 #       id: 10
-#       auto_requires_update: "on"
+#       auto_requires_update: true
 #       parent_id: 1
 #       anti_malware:
-#         state: "on"
+#         state: true
 #         real_time_scan_configuration_id: 1
 #       firewall:
-#         state: "on"
+#         state: true
 #         rule_ids: [1, 2, 3]
 
 # Using REPLACED state
@@ -264,9 +233,9 @@ EXAMPLES = """
     config:
       - name: production_policy
         description: "REPLACED production policy"
-        auto_requires_update: "off"
+        auto_requires_update: false
         anti_malware:
-          state: "off"
+          state: false
 
 # RUN output:
 # -----------
@@ -276,20 +245,20 @@ EXAMPLES = """
 #     - name: production_policy
 #       description: "REPLACED production policy"
 #       id: 11
-#       auto_requires_update: "off"
+#       auto_requires_update: false
 #       anti_malware:
-#         state: "off"
+#         state: false
 #     before:
 #     - name: production_policy
 #       description: "Updated production policy description"
 #       id: 10
-#       auto_requires_update: "on"
+#       auto_requires_update: true
 #       parent_id: 1
 #       anti_malware:
-#         state: "on"
+#         state: true
 #         real_time_scan_configuration_id: 1
 #       firewall:
-#         state: "off"
+#         state: false
 
 # Using GATHERED state
 # --------------------
@@ -308,17 +277,17 @@ EXAMPLES = """
 #   - name: production_policy
 #     description: "REPLACED production policy"
 #     id: 11
-#     auto_requires_update: "off"
+#     auto_requires_update: false
 #     anti_malware:
-#       state: "off"
+#       state: false
 #   - name: web_server_policy
 #     description: "Web server policy"
 #     id: 12
-#     auto_requires_update: "on"
+#     auto_requires_update: true
 #     firewall:
-#       state: "on"
+#       state: true
 #     intrusion_prevention:
-#       state: "on"
+#       state: true
 
 - name: Gather ALL policies
   trendmicro.deepsec.deepsec_policies:
@@ -343,17 +312,17 @@ EXAMPLES = """
 #     - name: production_policy
 #       description: "REPLACED production policy"
 #       id: 11
-#       auto_requires_update: "off"
+#       auto_requires_update: false
 #       anti_malware:
-#         state: "off"
+#         state: false
 #     - name: web_server_policy
 #       description: "Web server policy"
 #       id: 12
-#       auto_requires_update: "on"
+#       auto_requires_update: true
 #       firewall:
-#         state: "on"
+#         state: true
 #       intrusion_prevention:
-#         state: "on"
+#         state: true
 
 # Using OVERRIDDEN state
 # ----------------------
@@ -364,7 +333,7 @@ EXAMPLES = """
     config:
       - name: new_policy
         description: "Only this policy will exist"
-        auto_requires_update: "on"
+        auto_requires_update: true
 """
 
 RETURN = """

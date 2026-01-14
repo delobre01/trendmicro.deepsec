@@ -40,14 +40,14 @@ RESPONSE_PAYLOAD = {
             "ID": 10,
             "name": "production_policy",
             "description": "Production server security policy",
-            "autoRequiresUpdate": "on",
+            "autoRequiresUpdate": true,
             "parentID": 1,
             "antiMalware": {
-                "state": "on",
+                "state": true,
                 "realTimeScanConfigurationID": 1,
             },
             "firewall": {
-                "state": "on",
+                "state": true,
                 "ruleIDs": [1, 2, 3],
             },
         },
@@ -58,26 +58,26 @@ REQUEST_PAYLOAD = [
     {
         "name": "production_policy",
         "description": "Production server security policy",
-        "auto_requires_update": "on",
+        "auto_requires_update": true,
         "parent_id": 1,
         "anti_malware": {
-            "state": "on",
+            "state": true,
             "real_time_scan_configuration_id": 1,
         },
         "firewall": {
-            "state": "on",
+            "state": true,
             "rule_ids": [1, 2, 3],
         },
     },
     {
         "name": "web_server_policy",
         "description": "Web server policy",
-        "auto_requires_update": "on",
+        "auto_requires_update": true,
         "firewall": {
-            "state": "on",
+            "state": true,
         },
         "intrusion_prevention": {
-            "state": "on",
+            "state": true,
         },
     },
 ]
