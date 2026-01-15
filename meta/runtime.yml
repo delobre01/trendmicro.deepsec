@@ -65,3 +65,9 @@ plugin_routing:
         warning_text: See the plugin documentation for more details
     intrusion_prevention_rules:
       redirect: trendmicro.deepsec.deepsec_intrusion_prevention_rules
+    policies:
+      redirect: trendmicro.deepsec.deepsec_policies
+    directory_lists:
+      redirect: trendmicro.deepsec.deepsec_directory_lists
+    scheduled_tasks:
+      redirect: trendmicro.deepsec.deepsec_scheduled_tasks
