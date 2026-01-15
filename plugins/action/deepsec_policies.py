@@ -377,19 +377,7 @@ class ActionModule(ActionBase):
                     self._task.args["config"],
                 )
             else:
-                code, response = conn_request.get(self.api_object)
-                self._check_for_response_code(code, response)
-                if response.get(self.api_return):
-                    self._result["gathered"] = [
-                        map_obj_to_params(
-                            policy,
-                            self.key_transform,
-                            self.api_return,
-                        )
-                        for policy in response[self.api_return]
-                    ]
-                else:
-                    self._result["gathered"] = []
+                self._result["gathered"] = conn_request.get(self.api_object)
             self._result["changed"] = False
         elif self._task.args["state"] == "merged" or self._task.args["state"] == "replaced":
             if self._task.args.get("config"):
