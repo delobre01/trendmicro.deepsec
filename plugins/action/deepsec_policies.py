@@ -364,6 +364,10 @@ class ActionModule(ActionBase):
         self._check_argspec()
         if self._result.get("failed"):
             return self._result
+        
+        if task_vars is None:
+            task_vars = {}
+        
         conn = Connection(self._connection.socket_path)
         conn_request = DeepSecurityRequest(
             connection=conn,
