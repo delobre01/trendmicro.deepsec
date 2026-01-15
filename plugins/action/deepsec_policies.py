@@ -320,9 +320,8 @@ class ActionModule(ActionBase):
         changed = False
 
         # Get all existing policies
-        code, all_policies_response = conn_request.get(self.api_object)
-        self._check_for_response_code(code, all_policies_response)
-
+        all_policies_response = conn_request.get(self.api_object)
+        
         if all_policies_response.get(self.api_return):
             for policy in all_policies_response[self.api_return]:
                 policy_data = map_obj_to_params(
